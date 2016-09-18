@@ -8,7 +8,8 @@
   },
   "files": [
     "bin/",
-    "dist/"
+    "dist/",
+    "Contents.json"
   ],
   "scripts": {
     "clean": "rimraf dist",
