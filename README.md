@@ -11,15 +11,13 @@
 ## Install
 
 ```sh
-npm i -D jimp-appicon
+npm i -g jimp-appicon
 ```
 
 ## Usage
 
-```js
-import jimpAppicon from "jimp-appicon"
-
-jimpAppicon() // true
+```sh
+appicon -s MyAppIcon.png
 ```
 
 ## License

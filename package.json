@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A module for creating AppIcons for iOS",
   "main": "dist/index.js",
+  "bin": {
+    "appicon": "dist/index.js"
+  },
   "files": [
     "bin/",
     "dist/"
@@ -56,6 +59,7 @@
     "watch": "^0.16.0"
   },
   "dependencies": {
+    "commander": "^2.9.0",
     "jimp": "^0.2.27"
   }
 }
