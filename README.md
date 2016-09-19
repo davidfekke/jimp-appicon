@@ -6,7 +6,11 @@
 [![Dependency Status][depstat-image]][depstat-url]
 [![Downloads][download-badge]][npm-url]
 
-> A module for creating AppIcons for  applications. This command line program uses native JavaScript image processing (Jimp), so it does not require any native extensions.
+> A module for creating AppIcons for iOS applications. 
+This command line program uses native JavaScript image processing (Jimp), so it does not require any native extensions.
+
+Have you gotten sick of creating the different iOS icon sized images in Photoshop or some other image editing application. 
+Use this command line utility to create all of your icon assests.
 
 ## Install
 
@@ -19,12 +23,14 @@ npm i -g jimp-appicon
 ```sh
 appicon -s MyAppIcon.png
 ```
-If you do not specify a source, Appicon will will default to a file named 'Appicon.png' in the same directory this ommand is run. Appicon will save a directory
-called Appicon.iconset into the directory where this command is run.
+If you do not specify a source, Appicon will will default to a file named 'Appicon.png' in the same directory this command is run. 
+Appicon will save a directory called 'Icons' into the directory where this command is run.
+
+Once you are done, simply copy the 'Appicon.appiconset' directory into the 'Assets.xcassets' directory in your iOS xcode project.
 
 ## License
 
-MIT © [David Fekke](https://fek.io)
+Apache-2.0 © [David Fekke](https://fek.io)
 
 [npm-url]: https://npmjs.org/package/jimp-appicon
 [npm-image]: https://img.shields.io/npm/v/jimp-appicon.svg?style=flat-square
