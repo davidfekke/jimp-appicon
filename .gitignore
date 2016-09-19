@@ -6,4 +6,5 @@ dist
 tmp
 coverage
 npm-debug.log
-*.png
+Appicon.appiconset
+Icons
