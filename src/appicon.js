@@ -2,7 +2,11 @@
 import Jimp from 'jimp';
 import path from 'path';
 import fs from 'fs';
+import cluster from 'cluster';
+import getfilelist from './getfilelist';
+
 const contents = require(path.join(__dirname, '../Contents.json'));
+const filelist = getfilelist();
 
 /**
  * @param {Type}
@@ -11,20 +15,27 @@ const contents = require(path.join(__dirname, '../Contents.json'));
 export default function (source) {
   const filepath = path.join(__dirname, source);
   const contentFile = path.join(__dirname, '../Contents.json');
-  
+  const workingdir = process.cwd();
+
   fs.mkdir('Icons', () => {
-    resizeAndSaveIcon(source, 'Icons/iTunesArtwork@1x.png', 512);
-    resizeAndSaveIcon(source, 'Icons/iTunesArtwork@2x.png', 1024);
-    resizeAndSaveIcon(source, 'Icons/iTunesArtwork@3x.png', 1532);
     fs.mkdir('Icons/Appicon.appiconset', () => {
       fs.createReadStream(contentFile).pipe(fs.createWriteStream('Icons/Appicon.appiconset/Contents.json'));
-      contents.images.forEach(i => {
-        console.log('Processing: ' + i.filename);
-        const width = i.size.split('x')[0];
-        const scale = i.scale.charAt(0);
+      if (cluster.isMaster) {
+        for (var i = 0; i < filelist.length; i++) {
+          const count = i + 1;
+          cluster.fork();
+        }
+        cluster.on('exit', (worker, code, signal) => {
+          // console.log(`worker ${worker.process.pid} died`);
+        });
+      } else if (cluster.isWorker) {
+        // cluster.worker.id
+        const width = filelist[cluster.worker.id-1].size.split('x')[0];
+        const scale = filelist[cluster.worker.id-1].scale.charAt(0);
         const scaledSize = width * scale;
-        resizeAndSaveIcon(source, 'Icons/Appicon.appiconset/' + i.filename, scaledSize);
-      });
+        const filepath = path.join(workingdir, '/' + filelist[cluster.worker.id-1].filename);
+        resizeAndSaveIcon(source, filepath, scaledSize);
+      }
     });
   });
   return true;
@@ -33,7 +44,12 @@ export default function (source) {
 function resizeAndSaveIcon(filename, name, size) {
     Jimp.read(filename).then(function (icon) {
     icon.resize(size, size)             // resize  
-        .write(name);                   // save 
+        .write(name, (err, result) => {
+            if (err) {
+                console.log('Error: ' + err);
+            }
+            process.exit(0); 
+        });                   // save 
         console.log('Writting to: ' + name);
     }).catch(function (err) {
         console.error(err);
