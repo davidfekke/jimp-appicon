@@ -15,7 +15,13 @@ const filelist = getfilelist();
 export default function (source) {
   const filepath = path.join(__dirname, source);
   const contentFile = path.join(__dirname, '../Contents.json');
+  const androidPath = path.join(__dirname, '../android.json');
   const workingdir = process.cwd();
+  const androidArray = require(androidPath);
+  
+  androidArray.forEach((item) => {
+    createDirectoryTree(item.filename);
+  });
 
   fs.mkdir('Icons', () => {
     fs.mkdir('Icons/Appicon.appiconset', () => {
@@ -54,4 +60,29 @@ function resizeAndSaveIcon(filename, name, size) {
     }).catch(function (err) {
         console.error(err);
     });
+}
+
+function createDirectoryTree(path) {
+    const dirs = path.split('/');
+    var currentPath = '.';
+    dirs.splice(0, dirs.length-1).forEach((directory) => {
+        currentPath = currentPath + '/' + directory;
+        checkDirectory(currentPath, errorHdl);
+        console.log(currentPath);
+    });
+}
+
+function errorHdl(err) {
+    //console.log(err);
+}
+
+function checkDirectory(directory, callback) {  
+  const myPath = directory + '/'; 
+  fs.stat(myPath, function(err, stats) {
+    if (err && err.errno === -2) {
+      fs.mkdir(directory, callback);
+    } else {
+      callback(err)
+    }
+  });
 }
