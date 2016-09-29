@@ -9,7 +9,8 @@
   "files": [
     "bin/",
     "dist/",
-    "Contents.json"
+    "Contents.json",
+    "android.json"
   ],
   "scripts": {
     "clean": "rimraf dist",
