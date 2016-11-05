@@ -24,8 +24,8 @@ export default function (source) {
   });
 
   fs.mkdir('Icons', () => {
-    fs.mkdir('Icons/Appicon.appiconset', () => {
-      fs.createReadStream(contentFile).pipe(fs.createWriteStream('Icons/Appicon.appiconset/Contents.json'));
+    fs.mkdir('Icons/AppIcon.appiconset', () => {
+      fs.createReadStream(contentFile).pipe(fs.createWriteStream('Icons/AppIcon.appiconset/Contents.json'));
       if (cluster.isMaster) {
         for (var i = 0; i < filelist.length; i++) {
           const count = i + 1;

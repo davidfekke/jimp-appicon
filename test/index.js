@@ -14,5 +14,5 @@ test("jimpAppicon", (t) => {
 
 test("getFileList", (t) => {
   t.plan(1)
-  t.equal(73, getfilelist().length, "Nothing returned")
+  t.equal(74, getfilelist().length, "Nothing returned")
 })
