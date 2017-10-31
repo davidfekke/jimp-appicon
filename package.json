@@ -1,6 +1,6 @@
 {
   "name": "jimp-appicon",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "A module for creating AppIcons for iOS",
   "main": "dist/index.js",
   "bin": {
