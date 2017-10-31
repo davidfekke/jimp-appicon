@@ -20,7 +20,7 @@
     "test": "babel-node test/index.js | tspec",
     "prebuild": "npm run clean -s",
     "build": "babel --optional runtime src -d dist",
-    "postbuild": "npm run test -s",
+    
     "coverage": "babel-node node_modules/isparta/bin/isparta cover test/index.js",
     "coveralls": "npm run coverage -s && coveralls < coverage/lcov.info",
     "postcoveralls": "rimraf ./coverage",
